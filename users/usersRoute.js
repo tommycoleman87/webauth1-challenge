@@ -28,13 +28,17 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
     const user = req.body;
+    console.log(user)
     Users.findUser(user.username)
-    .then(u => {
-        if(u && bcrypt.compareSync(user.password, u.password)) {
-            return res.status(200).json({message: `Welcome ${user.username}`})
+    .then(returnedUser => {
+        if(returnedUser && bcrypt.compareSync(user.password, returnedUser.password)) {
+             res.status(200).json({message: `Welcome ${user.username}`})
         } else {
-            return res.status(401).json({message: 'You shall not pass!'})
+             res.status(401).json({message: 'You shall not pass!'})
         }
+    })
+    .catch(err => {
+         res.status(500).json(err)
     })
 })
 
