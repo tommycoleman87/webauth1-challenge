@@ -2,12 +2,12 @@ import React from 'react';
 import Form from './Form';
 import Axios from 'axios';
 
-const Register = () => {
+const Register = (props) => {
 
     const registerUser = (user) => {
-        Axios.post('http://localhost:5000/api/register', user)
+        Axios.post('http://localhost:5000/api/restricted/register', user)
         .then(res => {
-            console.log(res)
+            props.history.push('/login')
         })
         .catch(err => {
             console.log(err)
